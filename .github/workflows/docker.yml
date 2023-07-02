@@ -28,7 +28,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            ghcr.io/np-inprove/app
+            ghcr.io/sagejs/starter-kit
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
