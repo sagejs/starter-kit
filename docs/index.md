@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: Get started
-      link: /markdown-examples
+      link: /get-started/starter-kit
     - theme: alt
       text: API Examples
       link: /api-examples
