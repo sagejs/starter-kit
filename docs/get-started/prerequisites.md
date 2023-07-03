@@ -14,19 +14,15 @@ Anthing goes, as long as it's supported by [Prisma](https://www.prisma.io/docs/r
 
 `@opengovsg/starter-kit` recommends [CockroachDB](https://start.open.gov.sg/docs/getting-started/prerequisites#cockroachdb), which is really good!
 
-I concur.
-
 :::
 
 ## Deployment
 
-Anything goes, as long as it's a supported **Worker** platform by [Nitro](https://nitro.unjs.io/deploy/workers)
+Anything goes, as long as it's a supported **Worker** platform by [Nitro](https://nitro.unjs.io/deploy/workers), and supports TCP connections.
 
 :::tip Not sure what to use?
 
 `@opengovsg/starter-kit` recommends [Vercel](https://start.open.gov.sg/docs/getting-started/prerequisites#vercel), which is really good!
-
-I think CloudFlare Pages/Workers is more flexible in this area.
 
 :::
 

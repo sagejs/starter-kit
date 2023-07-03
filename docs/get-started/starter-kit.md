@@ -20,6 +20,10 @@ By the way, Open Government Products is a great place to work. You should check 
 | **Deployment options** | Vercel                   | Most things, and also Vercel |
 | **Logging**            | Datadog                  | Axiom                        |
 
+### Env validation
+
+Unlike `@opengovsg/starter-kit`, env is handled through Nuxt's runtime configuration feature, instead of using `process.env`.
+
 ## Boom 💥
 
 Okay, enough hype. Let's get started.
