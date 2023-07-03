@@ -11,3 +11,7 @@ html {
   --at-apply: font-sans antialiased text-$text-color;
   --at-apply: bg-$surface-ground;
 }
+
+* {
+  --at-apply: font-sans antialiased;
+}

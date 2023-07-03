@@ -26,7 +26,10 @@ export default defineConfig({
     presetWebFonts({
       provider: 'bunny',
       fonts: {
-        sans: 'Inter',
+        sans: {
+          name: 'Inter',
+          weights: [400, 700],
+        },
       },
     }),
     presetTypography(),
