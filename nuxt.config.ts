@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  modules: [
+    '@unocss/nuxt',
+  ],
   typescript: {
     strict: true,
   },
@@ -8,6 +11,17 @@ export default defineNuxtConfig({
     '/': {
       prerender: true,
     },
+  },
+  css: [
+    '@unocss/reset/tailwind-compat.css',
+    'primevue/resources/primevue.min.css',
+    'primevue/resources/themes/mdc-light-deeppurple/theme.css',
+    '~/styles/global.css',
+  ],
+  build: {
+    transpile: [
+      'primevue',
+    ],
   },
   runtimeConfig: {
     public: {

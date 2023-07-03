@@ -14,22 +14,24 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
   },
-  "dependencies": {
-    "@prisma/client": "4.16.2",
-    "zod": "^3.21.4"
-  },
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.6",
     "@nuxt/devtools": "latest",
+    "@prisma/client": "4.16.2",
     "@types/node": "^18",
+    "@unocss/eslint-config": "^0.53.4",
+    "@unocss/nuxt": "^0.53.4",
     "eslint": "^8.44.0",
     "lint-staged": "^13.2.3",
     "nuxt": "^3.6.1",
+    "pinia": "^2.1.4",
+    "primevue": "^3.29.2",
     "prisma": "^4.16.2",
     "simple-git-hooks": "^2.8.1",
     "vitepress": "1.0.0-beta.4",
     "vue": "^3.3.4",
-    "vue-tsc": "^1.8.3"
+    "vue-tsc": "^1.8.3",
+    "zod": "^3.21.4"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
