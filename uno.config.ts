@@ -28,7 +28,7 @@ export default defineConfig({
       fonts: {
         sans: {
           name: 'Inter',
-          weights: [400, 700],
+          weights: [400, 600, 700],
         },
       },
     }),
