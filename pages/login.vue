@@ -10,6 +10,15 @@ const { data } = await $client.hello.useQuery({ text: 'client' })
 
 <template>
   <div>
-    hello {{ data }}
+    <header
+      class="h-24 flex items-center justify-between p-6 lg:px-30"
+    >
+      <NuxtLink to="/">
+        <span font-semibold>{{ config.public.appName }}</span>
+      </NuxtLink>
+    </header>
+    <div class="p-6 lg:px-30">
+      {{ data }}
+    </div>
   </div>
 </template>

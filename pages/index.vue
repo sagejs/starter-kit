@@ -15,7 +15,7 @@ function docs() {
 <template>
   <div>
     <header
-      class="flex items-center justify-between bg-$primary-50 p-6 lg:px-30"
+      class="h-24 flex items-center justify-between bg-$primary-50 p-6 lg:px-30"
     >
       <NuxtLink to="/">
         <span font-semibold>{{ config.public.appName }}</span>
