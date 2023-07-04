@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { verifyToken } from '../../services/auth'
 import { VerificationError } from '../../services/auth.error'
 import { publicProcedure, router } from '../../trpc'
+import type { SessionData } from '../../../utils/session'
 
 export const emailSessionRouter = router({
   // Generate OTP.
@@ -38,8 +39,8 @@ export const emailSessionRouter = router({
           },
         }),
         resend.sendEmail({
-          from: 'onboarding@resend.dev',
-          to: 'delivered@resend.dev',
+          from: useRuntimeConfig().resend.fromAddress,
+          to: email,
           subject: 'Login verification code',
           react: EmailVerification({
             code: token,
