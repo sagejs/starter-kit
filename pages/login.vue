@@ -1,11 +1,21 @@
 <script setup lang="ts">
-const { $client } = useNuxtApp()
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+
 const config = useRuntimeConfig()
+const { $client } = useNuxtApp()
+
+const formData = reactive({
+  email: '',
+})
+
+function login() {
+  $client.auth.email.login.mutate(formData)
+}
+
 useSeoMeta({
   title: config.public.appName,
 })
-
-const { data } = await $client.hello.useQuery({ text: 'client' })
 </script>
 
 <template>
@@ -18,7 +28,10 @@ const { data } = await $client.hello.useQuery({ text: 'client' })
       </NuxtLink>
     </header>
     <div class="p-6 lg:px-30">
-      {{ data }}
+      <InputText v-model="formData.email" />
+      <Button @click="login">
+        Login
+      </Button>
     </div>
   </div>
 </template>

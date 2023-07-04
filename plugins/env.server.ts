@@ -1,5 +1,7 @@
 import { z } from 'zod'
-import { useLogger } from '@nuxt/kit'
+import { createConsola } from 'consola'
+
+const log = createConsola()
 
 /**
  * Specify your client-side environment variables schema here. This way you can ensure the app isn't
@@ -34,25 +36,11 @@ const r2ServerSchema = z.object({
   }),
 })
 
-const baseSgidSchema = z.object({
-  clientId: z.string().optional(),
-  clientSecret: z.string().optional(),
-  redirectUri: z.union([z.string().url(), z.string()]).optional(),
-  privateKey: z.string().optional(),
-})
-
-const sgidServerSchema = z.object({
-  clientId: z.string().min(1),
-  clientSecret: z.string().min(1),
-  redirectUri: z.string().url(),
-  privateKey: z.string().min(1),
-})
-
-const sendgridSchema = z.object({
-  sendgrid: z.object({
-    apiKey: z.string().optional(),
+const resendSchema = z.object({
+  resend: z.object({
+    apiKey: z.string(),
     fromAddress: z.union([
-      z.string().email().optional(),
+      z.string().email(),
       z.string().length(0),
     ]),
   }),
@@ -71,8 +59,7 @@ const server = z
   })
   // Add on schemas as needed that requires conditional validation.
   .merge(baseR2Schema)
-  .merge(baseSgidSchema)
-  .merge(sendgridSchema)
+  .merge(resendSchema)
   .merge(client)
   // Add on refinements as needed for conditional environment variables
   // .superRefine((val, ctx) => ...)
@@ -92,25 +79,9 @@ const server = z
       })
     }
   })
-  .superRefine((val, ctx) => {
-    if (!val.public.enableSgid)
-      return
-
-    const parse = sgidServerSchema.safeParse(val)
-    if (!parse.success) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ['public.enableSgid'],
-        message: 'SGID environment variables are missing',
-      })
-      parse.error.issues.forEach((issue) => {
-        ctx.addIssue(issue)
-      })
-    }
-  })
-  .refine(val => !(val.sendgrid.apiKey && !val.sendgrid.fromAddress), {
-    message: 'sendgrid.fromAddress is required when sendgrid.apiKey is set',
-    path: ['sendgrid.fromAddress'],
+  .refine(val => !(val.resend.apiKey && !val.resend.fromAddress), {
+    message: 'resend.fromAddress is required when resend.apiKey is set',
+    path: ['resend.fromAddress'],
   })
 
 let init = false
@@ -118,22 +89,21 @@ export default defineNuxtPlugin(() => {
   if (init)
     return
 
-  const logger = useLogger('plugins/env.server.ts')
   const config = useRuntimeConfig()
 
   if (config.skipEnvValidation) {
-    logger.info('skipping env validation')
+    log.info('skipping env validation')
     return
   }
 
-  logger.info('running env validation')
+  log.info('running env validation')
 
   const parsed = server.safeParse(config)
   if (!parsed.success) {
-    logger.error('invalid environment variables: \n', parsed.error.flatten().fieldErrors)
+    log.error('invalid environment variables: \n', parsed.error.flatten().fieldErrors)
     return
   }
 
-  logger.info('passed env validation')
+  log.info('passed env validation')
   init = true
 })

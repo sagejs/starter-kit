@@ -4,7 +4,7 @@ Before you can impress your soulmate with your amazing app, you need the followi
 
 * A database provider of your choice
 * A deployment provider of your choice
-* A SendGrid account
+* A Resend account
 
 ## Database
 
@@ -26,6 +26,6 @@ Anything goes, as long as it's a supported **Worker** platform by [Nitro](https:
 
 :::
 
-## SendGrid
+## Resend
 
-Unfortunately, I don't have access to [Postman](https://start.open.gov.sg/docs/getting-started/prerequisites#postman-api), so SendGrid is the only built-in option.
+Unfortunately, I don't have access to [Postman](https://start.open.gov.sg/docs/getting-started/prerequisites#postman-api), and SendGrid doesn't like me, so Resend is the only option.

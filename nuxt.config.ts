@@ -57,7 +57,7 @@ export default defineNuxtConfig({
       redirectUri: '',
     },
 
-    sendgrid: {
+    resend: {
       apiKey: '',
       fromAddress: '',
     },

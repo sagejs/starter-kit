@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { publicProcedure, router } from '../trpc'
+import { authRouter } from './auth'
 
 export const appRouter = router({
   hello: publicProcedure
@@ -14,6 +15,7 @@ export const appRouter = router({
         time: new Date(),
       }
     }),
+  auth: authRouter,
 })
 
 // export type definition of API

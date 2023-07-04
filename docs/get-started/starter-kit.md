@@ -13,7 +13,8 @@ By the way, Open Government Products is a great place to work. You should check 
 |                        | `@opengovsg/starter-kit` | `@sagejs/starter-kit`        |
 | ---------------------- | ------------------------ | ---------------------------- |
 | **Framework**          | NextJS                   | NuxtJS                       |
-| **Auth**               | `iron-session`           | h3 (`iron-webcrypto`)               |
+| **Auth**               | `iron-session`           | h3 (`iron-webcrypto`)        |
+| **Sgid**               | Yes!                     | No                           |
 | **Mail**               | Postman / Sendgrid       | Resend                       |
 | **Package manager**    | NPM 😔                    | PNPM                         |
 | **UI Library**         | Chakra UI                | PrimeVue                     |

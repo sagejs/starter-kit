@@ -28,3 +28,6 @@ logs
 # VitePress
 docs/.vitepress/dist
 docs/.vitepress/cache
+
+# Email
+.react-email
