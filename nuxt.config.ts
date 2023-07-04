@@ -21,6 +21,7 @@ export default defineNuxtConfig({
   build: {
     transpile: [
       'primevue',
+      'trpc-nuxt',
     ],
   },
   runtimeConfig: {

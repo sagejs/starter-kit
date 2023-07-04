@@ -3,6 +3,10 @@ import Button from 'primevue/button'
 
 const config = useRuntimeConfig()
 
+useSeoMeta({
+  title: config.public.appName,
+})
+
 function docs() {
   window.open('https://start-docs.qinguan.me', '_target')
 }
@@ -11,11 +15,12 @@ function docs() {
 <template>
   <div>
     <header
-      class="bg-$primary-50 p-6 lg:px-30"
+      class="flex items-center justify-between bg-$primary-50 p-6 lg:px-30"
     >
       <NuxtLink to="/">
         <span font-semibold>{{ config.public.appName }}</span>
       </NuxtLink>
+      <Button label="Log in" @click="$router.push('login')" />
     </header>
     <section
       class="grid grid-cols-1 bg-$primary-50 p-6 pt-15 lg:grid-cols-2 lg:p-30"
