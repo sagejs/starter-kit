@@ -8,7 +8,7 @@ Before you can impress your soulmate with your amazing app, you need the followi
 
 ## Database
 
-Anthing goes, as long as it's supported by [Prisma](https://www.prisma.io/docs/reference/database-reference/database-features)
+Anything goes, as long as it's supported by [Prisma](https://www.prisma.io/docs/reference/database-reference/database-features)
 
 :::tip Not sure what to use?
 

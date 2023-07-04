@@ -13,12 +13,17 @@ By the way, Open Government Products is a great place to work. You should check 
 |                        | `@opengovsg/starter-kit` | `@sagejs/starter-kit`        |
 | ---------------------- | ------------------------ | ---------------------------- |
 | **Framework**          | NextJS                   | NuxtJS                       |
-| **Auth**               | `iron-session`           | `nuxt-session`               |
+| **Auth**               | `iron-session`           | h3 (`iron-webcrypto`)               |
+| **Mail**               | Postman / Sendgrid       | Resend                       |
 | **Package manager**    | NPM 😔                    | PNPM                         |
 | **UI Library**         | Chakra UI                | PrimeVue                     |
 | **Documentation**      | Docusaurus               | VitePress                    |
 | **Deployment options** | Vercel                   | Most things, and also Vercel |
 | **Logging**            | Datadog                  | Axiom                        |
+
+### Mail
+
+Unfortunately, my Sendgrid account was suspended seconds after I created it, so... Resend.
 
 ### Env validation
 
