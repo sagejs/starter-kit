@@ -11,6 +11,9 @@ export default defineNuxtConfig({
     '/': {
       prerender: true,
     },
+    '/login': {
+      prerender: true,
+    },
   },
   css: [
     '@unocss/reset/tailwind-compat.css',
