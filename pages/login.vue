@@ -68,7 +68,7 @@ async function login() {
               <InputText id="email" v-model="formData.email" autofocus :required="true" placeholder="sam@example.com" type="email" aria-describedby="email-help" class="max-w-md" />
               <small id="email-help" class="sr-only">Enter your email</small>
             </div>
-            <Button :loading="formData.pending" mt-6>
+            <Button type="submit" :loading="formData.pending" mt-6>
               Get OTP
             </Button>
           </template>
@@ -79,7 +79,7 @@ async function login() {
               <small id="otp-help" class="sr-only">Enter your OTP</small>
             </div>
 
-            <Button :loading="formData.pending" mt-6>
+            <Button type="submit" :loading="formData.pending" mt-6>
               Login
             </Button>
           </template>
