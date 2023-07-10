@@ -1,7 +1,7 @@
 import { getSession, sealSession, unsealSession, updateSession } from 'h3'
 import type { H3Event, SessionData } from 'h3'
 
-interface UserSessionData {
+export interface UserSessionData {
   id: string
 }
 
