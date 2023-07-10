@@ -23,21 +23,22 @@ const formData = reactive<{
   stage: 'email',
 })
 
-async function login() {
+async function generateOtp() {
   formData.pending = true
   try {
-    if (formData.stage === 'email') {
-      await $client.auth.email.login.mutate(formData)
-      formData.stage = 'otp'
-    }
-    else if (formData.stage === 'otp') {
-      // something else here
-    }
-    formData.pending = false
+    await $client.auth.email.login.mutate(formData)
+    formData.stage = 'otp'
   }
   catch (err) {
     formData.error = (err as TRPCError).message
   }
+  finally {
+    formData.pending = false
+  }
+}
+
+async function verifyOtp() {
+
 }
 </script>
 
@@ -61,29 +62,27 @@ async function login() {
           Login
         </h1>
 
-        <form mt-8 @submit.prevent="login">
-          <template v-if="formData.stage === 'email'">
+        <div mt-8>
+          <form v-if="formData.stage === 'email'" @submit.prevent="generateOtp">
             <div class="flex flex-col gap-2">
               <label for="email">Email</label>
               <InputText id="email" v-model="formData.email" autofocus :required="true" placeholder="sam@example.com" type="email" aria-describedby="email-help" class="max-w-md" />
               <small id="email-help" class="sr-only">Enter your email</small>
             </div>
-            <Button type="submit" :loading="formData.pending" mt-6>
-              Get OTP
-            </Button>
-          </template>
-          <template v-if="formData.stage === 'otp'">
+
+            <Button type="submit" :loading="formData.pending" mt-6 icon="" icon-pos="right" label="Get OTP" />
+          </form>
+
+          <form v-else-if="formData.stage === 'otp'" @submit.prevent="verifyOtp">
             <div class="flex flex-col gap-2">
               <label for="otp">OTP</label>
               <InputText id="otp" v-model="formData.otp" autofocus :required="true" placeholder="123456" aria-describedby="otp-help" class="max-w-md" />
               <small id="otp-help" class="sr-only">Enter your OTP</small>
             </div>
 
-            <Button type="submit" :loading="formData.pending" mt-6>
-              Login
-            </Button>
-          </template>
-        </form>
+            <Button type="submit" :loading="formData.pending" mt-6 icon="" icon-pos="right" label="Login" />
+          </form>
+        </div>
       </div>
     </div>
   </div>
