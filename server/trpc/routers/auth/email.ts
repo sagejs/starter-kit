@@ -1,9 +1,13 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
+import { render } from '@qingu/vue-email'
+import { createSSRApp } from 'vue'
+
 import { verifyToken } from '../../services/auth'
 import { VerificationError } from '../../services/auth.error'
 import { publicProcedure, router } from '../../trpc'
 import type { SessionData } from '../../../utils/session'
+import { VerificationCodeEmail } from '../../../emails/VerificationCodeEmail'
 
 export const emailSessionRouter = router({
   // Generate OTP.
@@ -22,7 +26,7 @@ export const emailSessionRouter = router({
 
       // May have one of them fail,
       // so users may get an email but not have the token saved, but that should be fine.
-      await Promise.all([
+      const [_, html] = await Promise.all([
         ctx.prisma.verificationToken.upsert({
           where: {
             identifier: email,
@@ -38,15 +42,14 @@ export const emailSessionRouter = router({
             expires,
           },
         }),
-        resend.sendEmail({
-          from: useRuntimeConfig().resend.fromAddress,
-          to: email,
-          subject: 'Login verification code',
-          react: EmailVerification({
-            code: token,
-          }),
-        }),
+        render(createSSRApp(VerificationCodeEmail, { appName: useRuntimeConfig().public.appName, verificationCode: token })),
       ])
+      await resend.sendEmail({
+        from: useRuntimeConfig().resend.fromAddress,
+        to: email,
+        subject: `${useRuntimeConfig().public.appName} - Login verification code`,
+        html,
+      })
       return email
     }),
   verifyOtp: publicProcedure
