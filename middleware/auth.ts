@@ -1,12 +1,18 @@
 import { createSessionContext } from '../server/utils/session'
 
 export default defineNuxtRouteMiddleware(async () => {
-  if (process.client)
-    return
+  if (process.client) {
+    const { $client } = useNuxtApp()
 
-  const event = useRequestEvent()
-  const session = createSessionContext(event)
+    const { error } = await $client.me.get.useQuery()
+    if (error.value?.data?.code === 'UNAUTHORIZED')
+      return '/login'
+  }
+  else {
+    const event = useRequestEvent()
+    const session = createSessionContext(event)
 
-  if (!(await session.get()).data.id)
-    return '/login'
+    if (!(await session.get()).data.id)
+      return '/login'
+  }
 })
