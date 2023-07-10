@@ -83,7 +83,9 @@ async function verifyOtp() {
               <small id="email-help" class="sr-only">Enter your email</small>
             </div>
 
-            <Button type="submit" :loading="formData.pending" mt-6 icon="" icon-pos="right" label="Get OTP" />
+            <div mt6>
+              <Button type="submit" :loading="formData.pending" icon="" icon-pos="right" label="Get OTP" />
+            </div>
           </form>
 
           <form v-else-if="formData.stage === 'otp'" @submit.prevent="verifyOtp">
@@ -93,7 +95,9 @@ async function verifyOtp() {
               <small id="otp-help" class="sr-only">Enter your OTP</small>
             </div>
 
-            <Button type="submit" :loading="formData.pending" mt-6 icon="" icon-pos="right" label="Login" />
+            <div mt6>
+              <Button type="submit" :loading="formData.pending" icon="" icon-pos="right" label="Login" />
+            </div>
           </form>
         </div>
       </div>
