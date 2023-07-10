@@ -17,7 +17,7 @@ const t = initTRPC.context<Context>().create({
 })
 
 const authMiddleware = t.middleware(async ({ next, ctx }) => {
-  const session = await ctx.session?.get()
+  const session = await ctx.session.get()
   if (!session.data.id)
     throw new TRPCError({ code: 'UNAUTHORIZED' })
 

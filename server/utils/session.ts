@@ -1,5 +1,5 @@
 import { getSession, sealSession, unsealSession, updateSession } from 'h3'
-import type { H3Event, SessionData } from 'h3'
+import type { H3Event, SessionConfig, SessionData } from 'h3'
 
 export interface UserSessionData {
   id: string
@@ -8,7 +8,8 @@ export interface UserSessionData {
 type SessionUpdate<T extends SessionData = SessionData> = Partial<SessionData<T>> | ((oldData: SessionData<T>) => Partial<SessionData<T>> | undefined)
 
 export function createSessionContext(event: H3Event) {
-  const config = {
+  const config: SessionConfig = {
+    name: useRuntimeConfig().sessionName,
     password: useRuntimeConfig().sessionSecret,
   }
 

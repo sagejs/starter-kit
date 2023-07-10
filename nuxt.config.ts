@@ -41,6 +41,7 @@ export default defineNuxtConfig({
 
     postmanApiKey: '',
     sessionSecret: '',
+    sessionName: 'h3',
 
     r2: {
       accessKeyId: '',

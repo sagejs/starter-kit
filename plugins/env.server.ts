@@ -56,6 +56,7 @@ const server = z
     otpExpiry: z.coerce.number().positive().optional().default(600),
     postmanApiKey: z.string().optional(),
     sessionSecret: z.string().min(32),
+    sessionName: z.string().optional(),
   })
   // Add on schemas as needed that requires conditional validation.
   .merge(baseR2Schema)
