@@ -38,7 +38,20 @@ async function generateOtp() {
 }
 
 async function verifyOtp() {
-
+  formData.pending = true
+  try {
+    await $client.auth.email.verifyOtp.mutate({
+      email: formData.email,
+      otp: formData.otp,
+    })
+    navigateTo('/')
+  }
+  catch (err) {
+    formData.error = (err as TRPCError).message
+  }
+  finally {
+    formData.pending = false
+  }
 }
 </script>
 
