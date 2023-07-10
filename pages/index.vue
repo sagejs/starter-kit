@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import Button from 'primevue/button'
 
+definePageMeta({
+  middleware: ['guest'],
+})
+
 const config = useRuntimeConfig()
 
 useSeoMeta({

@@ -3,6 +3,10 @@ import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import type { TRPCError } from '@trpc/server'
 
+definePageMeta({
+  middleware: ['guest'],
+})
+
 const config = useRuntimeConfig()
 const { $client } = useNuxtApp()
 
@@ -44,7 +48,7 @@ async function verifyOtp() {
       email: formData.email,
       otp: formData.otp,
     })
-    navigateTo('/')
+    navigateTo('/dashboard')
   }
   catch (err) {
     formData.error = (err as TRPCError).message

@@ -1,36 +1,21 @@
 import type { inferAsyncReturnType } from '@trpc/server'
-import type { H3Event, SessionData } from 'h3'
-
-type SessionUpdate<T extends SessionData = SessionData> = Partial<SessionData<T>> | ((oldData: SessionData<T>) => Partial<SessionData<T>> | undefined)
+import type { H3Event } from 'h3'
+import { logger } from '../utils/logger'
+import { createSessionContext } from '../utils/session'
 
 /**
  * Creates context for an incoming request
  * @link https://trpc.io/docs/context
  */
 export function createContext(_event: H3Event) {
-  const config = {
-    password: useRuntimeConfig().sessionSecret,
-  }
+  // TODO better logging for this
+  logger(_event.node.req, _event.node.res)
+
+  const session = createSessionContext(_event)
 
   return {
     prisma,
-    session: {
-      get<T extends SessionData>() {
-        return getSession<T>(_event, config)
-      },
-      update<T extends SessionData>(update: SessionUpdate<T>) {
-        return updateSession<T>(_event, config, update)
-      },
-      seal<T extends SessionData>() {
-        return sealSession<T>(_event, config)
-      },
-      unseal(sealed: string) {
-        return unsealSession(_event, config, sealed)
-      },
-      clear() {
-        return clearSession(_event, config)
-      },
-    },
+    session,
   }
 }
 

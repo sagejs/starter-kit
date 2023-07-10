@@ -20,7 +20,7 @@ By the way, Open Government Products is a great place to work. You should check 
 | **UI Library**         | Chakra UI                | PrimeVue                     |
 | **Documentation**      | Docusaurus               | VitePress                    |
 | **Deployment options** | Vercel                   | Most things, and also Vercel |
-| **Logging**            | Datadog                  | Axiom                        |
+| **Logging**            | Winston / Datadog        | Pino (w/ H3) / Axiom         |
 
 ### Mail
 
