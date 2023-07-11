@@ -1,5 +1,6 @@
 // Will be polyfilled, alls good
-import { getRandomValues, subtle } from 'node:crypto'
+import { getRandomValues } from 'node:crypto'
+import { scrypt } from '@noble/hashes/scrypt'
 
 function getRandomInt(min: number, max: number) {
   // Create byte array and fill with 1 random number
@@ -17,21 +18,13 @@ export function createVfnToken() {
   return getRandomInt(0, 1000000).toString().padStart(6, '0')
 }
 
-export async function createTokenHash(token: string, email: string) {
-  const message = `${token}:${email}`
-  const msgUint8 = new TextEncoder().encode(message)
-  const hashBuffer = await subtle.digest('SHA-256', msgUint8)
-  const hashArray = Array.from(new Uint8Array(hashBuffer))
-  const hashHex = hashArray
-    .map(b => b.toString(16).padStart(2, '0'))
-    .join('')
-
-  return hashHex
+export function createTokenHash(token: string, email: string) {
+  return scrypt(token, email, { N: 2 ** 16, r: 8, p: 1, dkLen: 32 }).toString()
 }
 
-export async function compareHash(token: string, email: string, hash: string) {
+export function compareHash(token: string, email: string, hash: string) {
   // Not too safe, but given the likelihood of attack in a random server somewhere... seems unlikely
-  return hash === await createTokenHash(token, email)
+  return hash === createTokenHash(token, email)
   // return timingSafeEqual(
   //   Buffer.from(hash),
   //   Buffer.from(createTokenHash(token, email)),
