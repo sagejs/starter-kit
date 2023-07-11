@@ -7,14 +7,6 @@ export default defineNuxtConfig({
   typescript: {
     strict: true,
   },
-  routeRules: {
-    '/': {
-      prerender: true,
-    },
-    '/login': {
-      prerender: true,
-    },
-  },
   css: [
     '@unocss/reset/tailwind-compat.css',
     'primevue/resources/primevue.min.css',
