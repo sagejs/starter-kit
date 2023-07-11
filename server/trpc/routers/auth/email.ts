@@ -22,7 +22,7 @@ export const emailSessionRouter = router({
       // TODO: rate limit this endpoint also
       const expires = new Date(Date.now() + useRuntimeConfig().otpExpiry * 1000)
       const token = createVfnToken()
-      const hashedToken = createTokenHash(token, email)
+      const hashedToken = await createTokenHash(token, email)
 
       // May have one of them fail,
       // so users may get an email but not have the token saved, but that should be fine.
