@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { publicProcedure, router } from '../trpc'
 import { authRouter } from './auth'
 import { meRouter } from './me'
+import { postRouter } from './post'
 
 export const appRouter = router({
   hello: publicProcedure
@@ -18,6 +19,7 @@ export const appRouter = router({
     }),
   auth: authRouter,
   me: meRouter,
+  post: postRouter,
 })
 
 // export type definition of API

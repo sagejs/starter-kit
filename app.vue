@@ -3,7 +3,7 @@ import Toast from 'primevue/toast'
 </script>
 
 <template>
-  <div>
+  <div class="h-full">
     <Toast />
     <NuxtLayout>
       <NuxtPage />

@@ -43,6 +43,7 @@
     "primevue": "^3.29.2",
     "prisma": "^4.16.2",
     "resend": "^0.16.0",
+    "sass": "^1.63.6",
     "simple-git-hooks": "^2.8.1",
     "std-env": "^3.3.3",
     "superjson": "^1.12.4",
