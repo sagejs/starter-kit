@@ -32,11 +32,10 @@ function docs() {
       >
         <div>
           <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl">
-            This is the best landing page. Ever.
+            This is probably an okay landing page. Maybe.
           </h1>
           <p class="mb-6 lg:text-xl md:text-lg">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate
-            laboriosam fugiat.
+            It has a cute dog though. That's gotta count for something, right?
           </p>
           <div flex="~ gap-2">
             <Button rounded label="Get started" @click="$router.push('/login')" />
