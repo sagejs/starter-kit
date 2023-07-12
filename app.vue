@@ -6,7 +6,7 @@ const route = useRoute()
 const resolvedTheme = computed(() => {
   let theme = 'lara-light-indigo'
   if (route.query.theme)
-    theme = cookieRaw.value = route.query.primevue as string
+    theme = cookieRaw.value = route.query.theme as string
 
   if (cookieRaw.value)
     theme = cookieRaw.value
