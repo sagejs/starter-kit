@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import Button from 'primevue/button'
 
+const config = useRuntimeConfig()
+
 definePageMeta({
   middleware: ['guest'],
 })
-
-const config = useRuntimeConfig()
 
 useSeoMeta({
   title: config.public.appName,
@@ -35,7 +35,8 @@ function docs() {
             This is the best landing page. Ever.
           </h1>
           <p class="mb-6 lg:text-xl md:text-lg">
-            Seriously, you won't believe how cute the dog is
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate
+            laboriosam fugiat.
           </p>
           <div flex="~ gap-2">
             <Button rounded label="Get started" @click="$router.push('/login')" />

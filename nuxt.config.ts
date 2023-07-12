@@ -1,5 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  experimental: {
+    componentIslands: true,
+  },
   devtools: { enabled: true },
   modules: [
     '@unocss/nuxt',
@@ -11,7 +14,6 @@ export default defineNuxtConfig({
   css: [
     '@unocss/reset/tailwind-compat.css',
     'primevue/resources/primevue.min.css',
-    'primevue/resources/themes/mdc-light-deeppurple/theme.css',
     '~/styles/global.css',
   ],
   build: {
