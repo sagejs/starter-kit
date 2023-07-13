@@ -13,6 +13,7 @@ RUN apk update
 RUN apk add git --no-cache
 
 # Prepare build deps ( ignore postinstall scripts for now )
+COPY .npmrc ./
 COPY package.json ./
 COPY pnpm-lock.yaml ./
 
