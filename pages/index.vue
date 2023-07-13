@@ -22,7 +22,7 @@ function docs() {
       class="h-24 flex items-center justify-between bg-$surface-section p-6 lg:px-30"
     >
       <NuxtLink to="/">
-        <span font-semibold>{{ config.public.appName }}</span>
+        <span class="font-semibold">{{ config.public.appName }}</span>
       </NuxtLink>
       <Button label="Log in" @click="$router.push('login')" />
     </header>
