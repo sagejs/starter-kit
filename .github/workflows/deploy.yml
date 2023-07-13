@@ -14,5 +14,3 @@ jobs:
       - run: flyctl deploy --remote-only -a starter-kit
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-
- 

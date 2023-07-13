@@ -7,9 +7,8 @@
  * @see https://trpc.io/docs/v10/router
  * @see https://trpc.io/docs/v10/procedures
  */
-import { initTRPC } from '@trpc/server'
+import { TRPCError, initTRPC } from '@trpc/server'
 import superjson from 'superjson'
-import { TRPCError } from '@trpc/server'
 import type { Context } from '~/server/trpc/context'
 
 const t = initTRPC.context<Context>().create({
