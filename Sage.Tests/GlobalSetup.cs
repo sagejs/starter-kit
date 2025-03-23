@@ -3,6 +3,7 @@
 // You can use attributes at the assembly level to apply to all tests in the assembly
 
 using Aspire.Hosting;
+using Projects;
 
 [assembly: Retry(3)]
 [assembly: System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
@@ -14,21 +15,19 @@ public class GlobalHooks
     public static DistributedApplication? App { get; private set; }
     public static ResourceNotificationService? NotificationService { get; private set; }
 
-    // Uncomment out and replace Projects reference with your app host
-    //[Before(TestSession)]
-    //public static async Task SetUp()
-    //{
-    //    // Arrange
-    //    var appHost = await DistributedApplicationTestingBuilder.CreateAsync<Projects.AppHost>();
-    //    appHost.Services.ConfigureHttpClientDefaults(clientBuilder =>
-    //    {
-    //        clientBuilder.AddStandardResilienceHandler();
-    //    });
+    [Before(TestSession)]
+    public static async Task SetUp()
+    {
+        var appHost = await DistributedApplicationTestingBuilder.CreateAsync<Sage_AppHost>();
+        appHost.Services.ConfigureHttpClientDefaults(clientBuilder =>
+        {
+            clientBuilder.AddStandardResilienceHandler();
+        });
 
-    //    App = await appHost.BuildAsync();
-    //    NotificationService = App.Services.GetRequiredService<ResourceNotificationService>();
-    //    await App.StartAsync();
-    //}
+        App = await appHost.BuildAsync();
+        NotificationService = App.Services.GetRequiredService<ResourceNotificationService>();
+        await App.StartAsync();
+    }
 
     [After(TestSession)]
     public static void CleanUp()

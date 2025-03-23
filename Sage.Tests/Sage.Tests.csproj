@@ -20,4 +20,8 @@
         <Using Include="Aspire.Hosting.Testing"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Sage.AppHost\Sage.AppHost.csproj" />
+    </ItemGroup>
+
 </Project>

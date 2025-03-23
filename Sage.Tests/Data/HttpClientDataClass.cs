@@ -8,10 +8,10 @@ namespace Sage.Tests.Data
 
         public async Task InitializeAsync()
         {
-            HttpClient = (GlobalHooks.App ?? throw new NullReferenceException()).CreateHttpClient("webfrontend");
+            HttpClient = (GlobalHooks.App ?? throw new NullReferenceException()).CreateHttpClient("api");
             if (GlobalHooks.NotificationService != null)
             {
-                await GlobalHooks.NotificationService.WaitForResourceAsync("webfrontend", KnownResourceStates.Running)
+                await GlobalHooks.NotificationService.WaitForResourceAsync("api", KnownResourceStates.Running)
                     .WaitAsync(TimeSpan.FromSeconds(30));
             }
         }
