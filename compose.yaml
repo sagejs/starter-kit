@@ -1,0 +1,6 @@
+﻿services:
+  sage.webapi:
+    image: sage.webapi
+    build:
+      context: .
+      dockerfile: Sage.WebApi/Dockerfile
