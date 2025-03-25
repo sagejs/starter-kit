@@ -24,6 +24,10 @@ jobs:
           node-version: 22
           cache: pnpm
 
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.x'
+
       - name: 📦 Install dependencies
         working-directory: Sage.WebApp
         run: pnpm install --frozen-lockfile
