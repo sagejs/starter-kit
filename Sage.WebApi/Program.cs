@@ -1,3 +1,5 @@
+using Scalar.AspNetCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
@@ -22,6 +24,7 @@ var summaries = new[]
 };
 
 app.MapDefaultEndpoints();
+app.MapScalarApiReference();
 
 app.MapGet("/weatherforecast", () =>
     {
