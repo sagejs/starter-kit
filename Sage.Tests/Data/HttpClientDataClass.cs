@@ -8,7 +8,7 @@ namespace Sage.Tests.Data
 
         public async Task InitializeAsync()
         {
-            HttpClient = (GlobalHooks.App ?? throw new NullReferenceException()).CreateHttpClient("api");
+            HttpClient = (GlobalHooks.App ?? throw new NullReferenceException()).CreateHttpClient("api", "http");
             if (GlobalHooks.NotificationService != null)
             {
                 await GlobalHooks.NotificationService.WaitForResourceAsync("api", KnownResourceStates.Running)
