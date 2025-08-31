@@ -13,16 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sage.ServiceDefaults", "Sag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sage.Tests", "Sage.Tests\Sage.Tests.csproj", "{5592FC85-DE44-4245-86C4-4E14344730AC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{48A15DDB-3B1D-4342-892A-6FACFD8B57AC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{48A15DDB-3B1D-4342-892A-6FACFD8B57AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48A15DDB-3B1D-4342-892A-6FACFD8B57AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF99A7C6-1529-4A0C-80BF-9134E2D57931}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AF99A7C6-1529-4A0C-80BF-9134E2D57931}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF99A7C6-1529-4A0C-80BF-9134E2D57931}.Release|Any CPU.ActiveCfg = Release|Any CPU

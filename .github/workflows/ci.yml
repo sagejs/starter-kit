@@ -33,4 +33,5 @@ jobs:
         run: pnpm install --frozen-lockfile
         
       - name: Test
-        run: ./build.sh test
+        shell: pwsh
+        run: ./build.ps1 test

@@ -3,12 +3,15 @@ using Projects;
 var builder = DistributedApplication.CreateBuilder(args);
 
 var db = builder.AddPostgres("db")
-  .WithPgWeb()
-  .AddDatabase("starter-kit");
+    .WithPgWeb(o => o.WithHostPort(8080))
+    .WithDataVolume("sage-starter-kit")
+    .AddDatabase("starter-kit");
 
-builder.AddProject<Sage_WebApi>("api")
-  .WithReference(db);
+var api = builder.AddProject<Sage_WebApi>("api")
+    .WithReference(db)
+    .WaitFor(db);
 
-builder.AddNpmApp("app", "../Sage.WebApp", "dev");
+var app = builder.AddNpmApp("app", "../Sage.WebApp", "dev")
+    .WithReference(api);
 
 builder.Build().Run();

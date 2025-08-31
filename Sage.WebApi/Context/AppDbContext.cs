@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Sage.WebApi.Entities;
 
-namespace SSTAlumniAssociation.Core.Context;
+namespace Sage.WebApi.Context;
 
 public partial class AppDbContext : DbContext
 {

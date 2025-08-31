@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using SSTAlumniAssociation.Core.Context;
+using Sage.WebApi.Context;
 
 #nullable disable
 
 namespace Sage.WebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250327051959_InitialCreate")]
+    [Migration("20250330091551_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

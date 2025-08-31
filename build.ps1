@@ -1,74 +1,117 @@
+<#
+.SYNOPSIS
+Build helper
+
+.DESCRIPTION
+USAGE
+    .\build.ps1 <command>
+
+COMMANDS
+    dev             run `dotnet run --project .\Sage.AppHost`
+    test            run `dotnet test`
+    watch           run `dotnet watch --project .\Sage.AppHost`
+    codegen         runs project and generates Kiota bindings for web app
+    help, -?        show this help message
+#>
+
 [CmdletBinding()]
 Param(
-    [Parameter(Position=0,Mandatory=$false,ValueFromRemainingArguments=$true)]
-    [string[]]$BuildArguments
+    [Parameter(Position = 0)]
+    [ValidateSet("dev", "watch", "test", "codegen", "help")]
+    [string]$Command,
+    [Parameter(Position = 1, ValueFromRemainingArguments = $true)]
+    [string[]]$Arguments
 )
 
-Write-Output "PowerShell $($PSVersionTable.PSEdition) version $($PSVersionTable.PSVersion)"
-
-Set-StrictMode -Version 2.0; $ErrorActionPreference = "Stop"; $ConfirmPreference = "None"; trap { Write-Error $_ -ErrorAction Continue; exit 1 }
-$PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
-
-###########################################################################
-# CONFIGURATION
-###########################################################################
-
-$BuildProjectFile = "$PSScriptRoot\build\_build.csproj"
-$TempDirectory = "$PSScriptRoot\\.nuke\temp"
-
-$DotNetGlobalFile = "$PSScriptRoot\\global.json"
-$DotNetInstallUrl = "https://dot.net/v1/dotnet-install.ps1"
-$DotNetChannel = "STS"
-
-$env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
-$env:DOTNET_NOLOGO = 1
-
-###########################################################################
-# EXECUTION
-###########################################################################
-
-function ExecSafe([scriptblock] $cmd) {
-    & $cmd
-    if ($LASTEXITCODE) { exit $LASTEXITCODE }
+function Command-Dev
+{
+    dotnet run --project ./Sage.AppHost $Arguments
 }
 
-# If dotnet CLI is installed globally and it matches requested version, use for execution
-if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue) -and `
-     $(dotnet --version) -and $LASTEXITCODE -eq 0) {
-    $env:DOTNET_EXE = (Get-Command "dotnet").Path
+function Command-Watch
+{
+    dotnet watch --project ./Sage.AppHost $Arguments
 }
-else {
-    # Download install script
-    $DotNetInstallFile = "$TempDirectory\dotnet-install.ps1"
-    New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
-    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-    (New-Object System.Net.WebClient).DownloadFile($DotNetInstallUrl, $DotNetInstallFile)
 
-    # If global.json exists, load expected version
-    if (Test-Path $DotNetGlobalFile) {
-        $DotNetGlobal = $(Get-Content $DotNetGlobalFile | Out-String | ConvertFrom-Json)
-        if ($DotNetGlobal.PSObject.Properties["sdk"] -and $DotNetGlobal.sdk.PSObject.Properties["version"]) {
-            $DotNetVersion = $DotNetGlobal.sdk.version
+function Command-Test
+{
+    dotnet test $Arguments
+}
+
+function Command-Codegen
+{
+    $res = Invoke-WebRequest "https://localhost:7059/health"
+    $appHost = $null
+    if ($res.StatusCode -ne 200)
+    {
+        Write-Host "Server not running, starting app host..."
+        $appHost = Start-Job -ScriptBlock { dotnet run --project ./Sage.AppHost }
+
+        foreach ($attempt in (1..60))
+        {
+            try
+            {
+                Write-Host "Attempting to connect to Web API #$attempt..."
+                $res = Invoke-WebRequest "https://localhost:7059/health"
+                if ($res.StatusCode -eq 200)
+                {
+                    break
+                }
+            }
+            catch
+            {
+                Write-Host "Failed to connect to Web API #$attempt..."
+            }
+
+            Start-Sleep 1
+        }
+
+        Receive-Job $appHost
+    }
+
+    Write-Host "Connected to server!"
+
+    try
+    {
+        Write-Host "Generating client..."
+        kiota generate --output ./Sage.WebApp/app/api -l TypeScript -d https://localhost:7059/openapi/v1.json -c ApiClient --clean-output
+        Write-Host "Generated client!"
+    }
+    finally
+    {
+        if ($null -ne $appHost)
+        {
+            Stop-Job $appHost
+            Remove-Job $apphost
+
+            Get-Job
         }
     }
+}
 
-    # Install by channel or version
-    $DotNetDirectory = "$TempDirectory\dotnet-win"
-    if (!(Test-Path variable:DotNetVersion)) {
-        ExecSafe { & powershell $DotNetInstallFile -InstallDir $DotNetDirectory -Channel $DotNetChannel -NoPath }
-    } else {
-        ExecSafe { & powershell $DotNetInstallFile -InstallDir $DotNetDirectory -Version $DotNetVersion -NoPath }
+function Command-Help
+{
+    Get-Help $PSCommandPath
+}
+
+Switch ($Command)
+{
+    "dev"  {
+        Command-Dev
     }
-    $env:DOTNET_EXE = "$DotNetDirectory\dotnet.exe"
-    $env:PATH = "$DotNetDirectory;$env:PATH"
+    "watch" {
+        Command-Watch
+    }
+    "test"  {
+        Command-Test
+    }
+    "codegen" {
+        Command-Codegen
+    }
+    "help" {
+        Command-Help
+    }
+    default {
+        Command-Help
+    }
 }
-
-Write-Output "Microsoft (R) .NET SDK version $(& $env:DOTNET_EXE --version)"
-
-if (Test-Path env:NUKE_ENTERPRISE_TOKEN) {
-    & $env:DOTNET_EXE nuget remove source "nuke-enterprise" > $null
-    & $env:DOTNET_EXE nuget add source "https://f.feedz.io/nuke/enterprise/nuget" --name "nuke-enterprise" --username "PAT" --password $env:NUKE_ENTERPRISE_TOKEN > $null
-}
-
-ExecSafe { & $env:DOTNET_EXE build $BuildProjectFile /nodeReuse:false /p:UseSharedCompilation=false -nologo -clp:NoSummary --verbosity quiet }
-ExecSafe { & $env:DOTNET_EXE run --project $BuildProjectFile --no-build -- $BuildArguments }
